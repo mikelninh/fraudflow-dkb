@@ -1,0 +1,36 @@
+{
+  "suite": "fraudflow-behavioural-evals-v1",
+  "generated_at": "2026-09-06T08:45:33.974393+00:00",
+  "passed": true,
+  "results": {
+    "card_testing_escalation": {
+      "passed": true,
+      "case_created": true,
+      "risk_score": 65,
+      "signals": [
+        "amount_anomaly",
+        "transaction_velocity"
+      ]
+    },
+    "routine_customer_no_alert": {
+      "passed": true,
+      "cases_created": []
+    },
+    "impossible_travel_takeover": {
+      "passed": true,
+      "case_created": true,
+      "risk_score": 70,
+      "signals": [
+        "impossible_travel",
+        "new_device"
+      ]
+    },
+    "human_decision_audit": {
+      "passed": true,
+      "audit_entries": 2,
+      "last_action": "ANALYST_DECISION",
+      "decision": "BLOCK",
+      "evidence_visible": true
+    }
+  }
+}
