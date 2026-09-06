@@ -10,7 +10,7 @@ from .service import service
 app = FastAPI(
     title="FraudFlow",
     description="Synthetic fraud data & integration proof-of-work",
-    version="0.2.0",
+    version="0.3.0",
 )
 
 
@@ -55,6 +55,7 @@ def get_case_audit(case_id: str):
 
 @app.post("/demo/card-testing")
 def run_card_testing_demo():
+    service.reset()
     created_case = None
     for event in card_testing_events():
         maybe_case = service.ingest(event)
