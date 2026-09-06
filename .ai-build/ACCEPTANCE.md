@@ -4,14 +4,17 @@ FraudFlow is release-ready only when all critical criteria pass.
 
 ## User experience
 - [x] Explicit users are documented in `.ai-build/USERS.md`.
+- [x] UX principles live in `docs/UX_PRINCIPLES.md`.
 - [x] Root route explains role relevance before asking the reviewer to interact.
-- [x] There is one obvious primary CTA: `Start 90-second investigation`.
-- [x] The UI guides the reviewer through Source → Interpretation → Decision → Proof.
-- [x] Raw source events are visible, including event IDs and values.
-- [x] Signal evidence is visible next to each triggered signal.
-- [x] The UI explains that the score is secondary to traceability.
+- [x] There is one obvious primary CTA: `90-Sekunden-Fall starten`.
+- [x] A reviewer needs no prior fraud knowledge to understand the demo.
+- [x] The default journey answers: what happened → why unusual → what next → where is the proof.
+- [x] Plain-language reasons are shown before technical terms or internal scores.
+- [x] Case ID, risk score and rule metadata are progressive-disclosure details for engineers.
+- [x] Raw source payments remain visible and traceable.
 - [x] The UI exposes behavioural eval results and links to repository evidence.
 - [x] The UI exposes a DKB-role requirement → proof map.
+- [x] The interface labels itself as an independent work sample and does not use protected DKB logo assets.
 
 ## Product
 - [x] Synthetic card-testing scenario is runnable from the UI/API.
