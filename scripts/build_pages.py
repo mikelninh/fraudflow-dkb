@@ -1,12 +1,16 @@
 import json
 import shutil
+import sys
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 from app.proof import proof_summary
 from app.seed import card_testing_events
 from app.service import FraudService
 
-ROOT = Path(__file__).resolve().parents[1]
 FRONTEND = ROOT / "frontend"
 DIST = ROOT / "dist"
 EVIDENCE = ROOT / "evidence" / "eval-results.json"
