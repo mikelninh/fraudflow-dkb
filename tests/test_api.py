@@ -18,7 +18,8 @@ def test_investigator_cockpit_route():
     assert "FraudFlow" in response.text
     assert "90-Sekunden-Fall starten" in response.text
     assert "Warum sollte jemand hinschauen?" in response.text
-    assert "Sie brauchen kein Fraud-Vorwissen" in response.text
+    assert "Kein Fraud-Vorwissen nötig" in response.text
+    assert "Problem verstanden" in response.text
 
 
 def test_frontend_assets_are_served():
