@@ -25,5 +25,9 @@ jobs:
         run: pytest -q
       - name: Behavioural evals
         run: python evals/run_evals.py --check
+      - name: Build GitHub Pages artifact
+        run: python scripts/build_pages.py
+      - name: Verify Pages artifact
+        run: test -f dist/index.html && test -f dist/demo/scenario.json && test -f dist/demo/proof.json
       - name: Compile check
         run: python -m compileall -q app evals scripts
