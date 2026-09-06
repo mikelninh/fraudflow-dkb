@@ -11,6 +11,12 @@ class FraudService:
         self.cases: dict[str, FraudCase] = {}
         self.audit: dict[str, list[AuditEntry]] = {}
 
+    def reset(self) -> None:
+        """Reset in-memory demo state so synthetic scenarios are repeatable."""
+        self.events.clear()
+        self.cases.clear()
+        self.audit.clear()
+
     def ingest(self, event: TransactionEvent) -> FraudCase | None:
         history = [e for e in self.events if e.customer_id == event.customer_id]
         signals = detect_signals(event, history)
