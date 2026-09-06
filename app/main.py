@@ -1,4 +1,7 @@
+from pathlib import Path
+
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse
 
 from .models import AnalystDecision, FraudCase, TransactionEvent
 from .seed import card_testing_events
@@ -7,8 +10,13 @@ from .service import service
 app = FastAPI(
     title="FraudFlow",
     description="Synthetic fraud data & integration proof-of-work",
-    version="0.1.0",
+    version="0.2.0",
 )
+
+
+@app.get("/", include_in_schema=False)
+def investigator_cockpit():
+    return FileResponse(Path(__file__).parent / "static" / "index.html")
 
 
 @app.get("/health")
