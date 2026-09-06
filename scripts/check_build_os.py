@@ -19,7 +19,11 @@ REQUIRED = [
     "tests/test_api.py",
     "evidence/README.md",
     "evidence/eval-results.json",
+    "evidence/PROOF_INDEX.md",
+    "evidence/REVIEWER_REVIEW.md",
+    "scripts/build_pages.py",
     ".github/workflows/ci.yml",
+    ".github/workflows/pages.yml",
 ]
 
 STAGES = ["SHAPE", "SPECIFY", "DELEGATE", "PROVE", "SHIP", "WATCH"]
