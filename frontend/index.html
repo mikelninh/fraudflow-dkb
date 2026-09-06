@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FraudFlow — DKB Fraud Data Proof</title>
+  <link rel="stylesheet" href="/ui/styles.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="FraudFlow home">
+        <span class="brand-mark">FF</span>
+        <span><strong>FraudFlow</strong><small>DKB role-specific proof of work</small></span>
+      </a>
+      <div class="topbar-actions">
+        <a class="quiet-link" href="https://github.com/mikelninh/fraudflow-dkb" target="_blank" rel="noreferrer">View repo ↗</a>
+        <span class="status-chip"><span class="status-dot"></span> synthetic data only</span>
+      </div>
+    </header>
+
+    <section class="hero" id="top">
+      <div class="hero-copy">
+        <p class="eyebrow">Junior Tech Analyst · Fraud Data & Analytics</p>
+        <h1>Trace a fraud case from <span>event</span> to <span>evidence</span> to <span>human decision</span>.</h1>
+        <p class="lede">A compact work sample showing how I translate fraud requirements into event-shaped data flows, explainable signals, analyst review and auditable system behaviour.</p>
+        <div class="hero-actions">
+          <button class="primary" id="startDemo">Start 90-second investigation</button>
+          <a class="secondary" href="#proof">See what this proves</a>
+        </div>
+        <div class="hero-note"><strong>What to expect:</strong> 5 synthetic card transactions → 2 explainable signals → 1 review case → your analyst decision.</div>
+      </div>
+      <aside class="role-card">
+        <p class="eyebrow">Why this maps to the role</p>
+        <div class="role-row"><span>01</span><div><strong>Requirements → technical flow</strong><small>API boundaries, acceptance criteria, data contracts</small></div></div>
+        <div class="role-row"><span>02</span><div><strong>Fraud data → explainable case</strong><small>Signals preserve source evidence instead of hiding behind a score</small></div></div>
+        <div class="role-row"><span>03</span><div><strong>Testing → production thinking</strong><small>Golden + negative evals, CI gate, runbook and audit trail</small></div></div>
+      </aside>
+    </section>
+
+    <section class="journey" aria-label="Investigation steps">
+      <button class="journey-step active" data-step="1"><span>1</span><strong>Replay events</strong><small>See the raw activity</small></button>
+      <button class="journey-step" data-step="2"><span>2</span><strong>Inspect case</strong><small>Understand why it surfaced</small></button>
+      <button class="journey-step" data-step="3"><span>3</span><strong>Decide</strong><small>Human remains accountable</small></button>
+      <button class="journey-step" data-step="4"><span>4</span><strong>Verify proof</strong><small>Check tests, evals and CI</small></button>
+    </section>
+
+    <section class="workspace" id="investigation">
+      <article class="panel events-panel">
+        <div class="panel-heading">
+          <div><p class="eyebrow">01 · Source</p><h2>Transaction events</h2></div>
+          <span class="mini-chip" id="eventCount">0 / 5</span>
+        </div>
+        <p class="panel-help">These are the source facts. Every downstream signal must be traceable back here.</p>
+        <div id="eventStream" class="event-stream">
+          <div class="empty-state"><span>→</span><strong>Start the investigation</strong><small>The five-event golden case will replay here.</small></div>
+        </div>
+      </article>
+
+      <article class="panel case-panel">
+        <div class="panel-heading">
+          <div><p class="eyebrow">02 · Interpretation</p><h2>Why did a case open?</h2></div>
+          <span class="decision-badge waiting" id="recommendation">WAITING</span>
+        </div>
+        <p class="panel-help">The important part is not the score. It is whether an analyst can explain exactly how the system got there.</p>
+        <div id="caseView" class="case-empty">
+          <div class="empty-state"><span>?</span><strong>No case yet</strong><small>A case appears only once evidence crosses the review threshold.</small></div>
+        </div>
+      </article>
+
+      <article class="panel evidence-panel">
+        <div class="panel-heading">
+          <div><p class="eyebrow">03 · Evidence</p><h2>Signals & analyst action</h2></div>
+          <span class="mini-chip">human-in-the-loop</span>
+        </div>
+        <p class="panel-help">Every signal shows the source-derived evidence. No LLM invents evidence or makes the final decision.</p>
+        <div id="signalList" class="signal-list">
+          <div class="empty-state compact"><span>✓</span><strong>Nothing hidden</strong><small>Signal evidence will appear here when the case opens.</small></div>
+        </div>
+        <div id="decisionControls"></div>
+        <div class="audit-card">
+          <div class="audit-title"><strong>Decision trace</strong><span>auditable</span></div>
+          <div id="auditTrail" class="audit-list"><p>Waiting for case activity…</p></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="explain-section">
+      <div>
+        <p class="eyebrow">System walkthrough</p>
+        <h2>One flow, four questions.</h2>
+      </div>
+      <div class="question-grid">
+        <article><span>01</span><strong>What happened?</strong><p>Five transaction events arrive in 27 seconds, ending in a €499 attempt.</p></article>
+        <article><span>02</span><strong>Why is it suspicious?</strong><p>Velocity and amount anomaly rules fire from the observed event history.</p></article>
+        <article><span>03</span><strong>Who decides?</strong><p>The system recommends review; an analyst explicitly records the final action and reason.</p></article>
+        <article><span>04</span><strong>Can we prove it?</strong><p>The same behaviour is covered by tests, behavioural evals, CI and committed evidence.</p></article>
+      </div>
+    </section>
+
+    <section class="proof-section" id="proof">
+      <div class="proof-intro">
+        <p class="eyebrow">04 · Proof</p>
+        <h2>Don’t trust the demo. Verify it.</h2>
+        <p>The UI is only the explanation layer. The actual proof lives in executable tests, behavioural evals, CI and repository artifacts.</p>
+      </div>
+      <div class="proof-dashboard">
+        <div class="proof-score"><span id="proofScore">—</span><small>behavioural evals passing</small></div>
+        <div class="proof-items" id="proofItems">
+          <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
+        </div>
+      </div>
+      <div class="proof-links">
+        <a href="https://github.com/mikelninh/fraudflow-dkb/blob/main/evidence/eval-results.json" target="_blank" rel="noreferrer"><strong>Eval evidence</strong><small>Machine-readable results ↗</small></a>
+        <a href="https://github.com/mikelninh/fraudflow-dkb/actions" target="_blank" rel="noreferrer"><strong>CI runs</strong><small>Build OS + tests + evals ↗</small></a>
+        <a href="https://github.com/mikelninh/fraudflow-dkb/blob/main/.ai-build/ACCEPTANCE.md" target="_blank" rel="noreferrer"><strong>Acceptance</strong><small>What “done” means ↗</small></a>
+        <a href="https://github.com/mikelninh/fraudflow-dkb/blob/main/.ai-build/USERS.md" target="_blank" rel="noreferrer"><strong>Users</strong><small>Hiring manager + engineer + HR ↗</small></a>
+      </div>
+    </section>
+
+    <section class="role-map-section">
+      <div class="proof-intro">
+        <p class="eyebrow">Role coverage</p>
+        <h2>DKB requirement → visible evidence.</h2>
+        <p>The target role emphasises requirements, data flows, APIs, event-driven architecture, testing and clear communication. This work sample maps each of those to something inspectable. </p>
+      </div>
+      <div class="role-map" id="roleMap"></div>
+    </section>
+
+    <section class="build-os">
+      <p class="eyebrow">How I build</p>
+      <h2>SHAPE → SPECIFY → DELEGATE → PROVE → SHIP → WATCH</h2>
+      <p>This repository treats the engineering process itself as evidence: explicit users and requirements, agent boundaries, evals, CI gates, runbooks and retrospective notes.</p>
+      <a href="https://github.com/mikelninh/fraudflow-dkb/tree/main/.ai-build" target="_blank" rel="noreferrer">Inspect the Build OS ↗</a>
+    </section>
+
+    <footer><span>FraudFlow · synthetic proof of work</span><span>Built for clarity, not theatre.</span></footer>
+  </main>
+  <script src="/ui/app.js" defer></script>
+</body>
+</html>

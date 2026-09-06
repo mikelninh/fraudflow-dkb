@@ -1,53 +1,24 @@
-# DKB Requirement Map
+# DKB Junior Tech Analyst Fraud Data & Analytics — Proof Map
 
-This document maps the FraudFlow proof to the capabilities expected in a junior fraud data / technology analyst role.
+This file maps the target responsibilities to inspectable repository evidence. It is intentionally specific: gaps are stated rather than hidden.
 
-| Role capability | FraudFlow evidence | Notes |
+| Target responsibility / skill | Evidence in FraudFlow | Status |
 |---|---|---|
-| Understand fraud processes | Card-testing golden scenario and case lifecycle | Synthetic and intentionally narrow |
-| Analyse data flows and data models | TransactionEvent, FraudCase, Signal and AuditEntry models | Explicit schemas rather than implicit dictionaries |
-| Translate domain needs into engineering requirements | Event → signal → decision → review → audit architecture | README documents the operational contract |
-| REST/API understanding | FastAPI endpoints for events, cases, decisions and audit | Runnable locally |
-| Event-stream thinking | Event-oriented ingestion boundary | Kafka is not claimed as implemented |
-| Data quality / trustworthy signals | Deterministic evidence-bearing signals | Every signal carries source evidence |
-| Human review workflows | ALLOW / REVIEW / BLOCK decision model | Analyst action is persisted in the audit trail |
-| Fraud detection logic | Velocity, new device, amount anomaly, impossible travel | Demonstration rules, not production detection logic |
-| Git / software delivery | Public repository with runnable service and tests | Small by design |
-| Python | FastAPI / Pydantic implementation | Direct evidence |
-| Communication between domain and technology | README, architecture and requirement mapping | Designed for hiring-manager review |
+| Capture business + technical processes and translate requirements for developers | `.ai-build/SPEC.md`, `.ai-build/ACCEPTANCE.md`, typed `TransactionEvent` / `FraudCase` contracts | Demonstrated |
+| Accompany work from requirements through testing | Build OS, API tests, behavioural eval suite, CI release gate, runbook | Demonstrated |
+| Analyse data structures, models and cross-system data flows | `ARCHITECTURE.md` plus event → signal → case → audit flow | Demonstrated |
+| Integrate services and interfaces in an event-driven architecture | Event-shaped FastAPI ingestion boundary; documented future event-stream boundary | Demonstrated at proof level |
+| Clarify REST APIs, event streams and synchronous/asynchronous interfaces | REST endpoints + architecture/decision docs | REST demonstrated; event-stream concepts only |
+| Git / GitHub | Repo, commits, GitHub Actions | Demonstrated |
+| Python | FastAPI backend, deterministic rule engine, eval runner | Demonstrated |
+| Testing / technical acceptance | Golden, negative, adversarial and API tests | Demonstrated |
+| Communicate complex technical topics clearly | First-class guided frontend and explicit reviewer users | Demonstrated |
+| SQL / BI tools | Not used in this intentionally narrow proof | Gap / address in application |
+| Kafka production experience | Architecture-compatible concepts only; no production claim | Gap / learning target |
+| Cloud data pipelines | Deployment + integration concepts, not a real bank data platform | Partial |
 
-## What is deliberately not claimed
+## Strongest story
 
-FraudFlow does **not** claim:
+The value of the work sample is not “I built a fraud detector”. It is:
 
-- production banking experience,
-- production Kafka operation,
-- trained fraud ML models,
-- access to bank data,
-- regulatory certification,
-- or production-grade fraud thresholds.
-
-The proof demonstrates how I reason about fraud-data integration and analyst workflows using transparent synthetic data.
-
-## 90-second review path
-
-1. Read the architecture in the README.
-2. Run `POST /demo/card-testing`.
-3. Inspect the returned signals and their evidence.
-4. Open the generated case.
-5. Submit a human `BLOCK` decision.
-6. Fetch the audit trail and verify the decision and visible evidence were persisted.
-
-## Interview discussion prompts
-
-The proof is also intended to open useful technical discussion:
-
-- Where should rule evaluation live in the real fraud platform?
-- Which events are authoritative versus derived?
-- How are event ordering and duplicate delivery handled?
-- How are thresholds versioned and approved?
-- Which signals should block synchronously versus create asynchronous review cases?
-- How is analyst feedback returned to rule/model development?
-- What should be monitored for drift, data loss and sudden false-positive changes?
-
-These are intentionally left as architecture questions rather than hidden behind fake implementation complexity.
+> I can take an ambiguous fraud workflow, define its users and acceptance criteria, express the data contracts and interfaces, build an inspectable implementation, prove expected/negative behaviour, and communicate the result to both domain and engineering reviewers.

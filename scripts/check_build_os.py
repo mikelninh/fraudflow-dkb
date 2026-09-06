@@ -10,9 +10,15 @@ REQUIRED = [
     ".ai-build/EVALS.md",
     ".ai-build/RUNBOOK.md",
     ".ai-build/RETROSPECTIVE.md",
+    ".ai-build/USERS.md",
+    "frontend/index.html",
+    "frontend/styles.css",
+    "frontend/app.js",
     "evals/run_evals.py",
     "tests/test_golden_case.py",
+    "tests/test_api.py",
     "evidence/README.md",
+    "evidence/eval-results.json",
     ".github/workflows/ci.yml",
 ]
 

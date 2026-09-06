@@ -1,27 +1,35 @@
+import json
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 
 from .models import AnalystDecision, FraudCase, TransactionEvent
+from .proof import proof_summary
 from .seed import card_testing_events
 from .service import service
+
+ROOT = Path(__file__).resolve().parents[1]
+FRONTEND = ROOT / "frontend"
+EVIDENCE = ROOT / "evidence" / "eval-results.json"
 
 app = FastAPI(
     title="FraudFlow",
     description="Synthetic fraud data & integration proof-of-work",
-    version="0.3.0",
+    version="0.4.0",
 )
+app.mount("/ui", StaticFiles(directory=FRONTEND), name="ui")
 
 
 @app.get("/", include_in_schema=False)
 def investigator_cockpit():
-    return FileResponse(Path(__file__).parent / "static" / "index.html")
+    return FileResponse(FRONTEND / "index.html")
 
 
 @app.get("/health")
 def health() -> dict[str, str]:
-    return {"status": "ok"}
+    return {"status": "ok", "version": "0.4.0"}
 
 
 @app.post("/events/transaction", response_model=FraudCase | None)
@@ -53,14 +61,27 @@ def get_case_audit(case_id: str):
         raise HTTPException(status_code=404, detail="Case not found") from exc
 
 
+@app.get("/proof/summary")
+def get_proof_summary():
+    try:
+        results = json.loads(EVIDENCE.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise HTTPException(status_code=503, detail="Proof evidence unavailable") from exc
+    return proof_summary(results)
+
+
 @app.post("/demo/card-testing")
 def run_card_testing_demo():
     service.reset()
+    events = card_testing_events()
     created_case = None
-    for event in card_testing_events():
+    for event in events:
         maybe_case = service.ingest(event)
         if maybe_case:
             created_case = maybe_case
     if not created_case:
         raise HTTPException(status_code=500, detail="Golden scenario did not create a case")
-    return created_case
+    return {
+        "source_events": [event.model_dump(mode="json") for event in events],
+        "case": created_case.model_dump(mode="json"),
+    }

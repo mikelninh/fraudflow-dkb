@@ -3,7 +3,7 @@
   "functions": {
     "app/main.py": {
       "maxDuration": 10,
-      "includeFiles": "app/static/**"
+      "includeFiles": "{frontend/**,evidence/eval-results.json}"
     }
   }
 }
