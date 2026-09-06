@@ -12,9 +12,11 @@ FraudFlow is release-ready only when all critical criteria pass.
 - [x] Plain-language reasons are shown before technical terms or internal scores.
 - [x] Case ID, risk score and rule metadata are progressive-disclosure details for engineers.
 - [x] Raw source payments remain visible and traceable.
+- [x] Only the final trigger payment is visually marked as suspicious in the golden case.
 - [x] The UI exposes behavioural eval results and links to repository evidence.
 - [x] The UI exposes a DKB-role requirement → proof map.
 - [x] The interface labels itself as an independent work sample and does not use protected DKB logo assets.
+- [x] HR, hiring-manager and engineer review findings are documented in `evidence/REVIEWER_REVIEW.md`.
 
 ## Product
 - [x] Synthetic card-testing scenario is runnable from the UI/API.
@@ -34,12 +36,14 @@ FraudFlow is release-ready only when all critical criteria pass.
 - [x] First-class frontend lives in `frontend/`.
 - [x] API tests verify frontend, proof endpoint and source traceability.
 - [x] Behavioural eval runner covers positive and negative cases.
-- [x] CI checks repository contract, tests and evals.
+- [x] CI checks repository contract, tests, evals and the static reviewer artifact.
+- [x] `scripts/build_pages.py` generates the GitHub Pages site from the same synthetic seed and committed eval evidence.
+- [x] `.github/workflows/pages.yml` gates deployment behind Build OS, tests and evals.
 - [x] Build OS files are present and non-empty.
-- [ ] Public deployment is healthy and manually smoke-tested.
+- [ ] GitHub Pages deployment is healthy and manually smoke-tested.
 
 ## Release command
 
 ```bash
-python scripts/check_build_os.py && pytest -q && python evals/run_evals.py --check
+python scripts/check_build_os.py && pytest -q && python evals/run_evals.py --check && python scripts/build_pages.py
 ```
