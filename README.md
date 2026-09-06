@@ -1,37 +1,16 @@
 # FraudFlow — Fraud Data & Integration Lab
 
-A small proof-of-work for a **Junior Tech Analyst Fraud Data & Analytics** role.
+A targeted proof-of-work for a **Junior Tech Analyst Fraud Data & Analytics** role.
 
-FraudFlow demonstrates how a suspicious payment can move through an explainable, auditable workflow:
+FraudFlow demonstrates a small, inspectable fraud workflow:
 
-**Event → Validation → Fraud Signals → Risk Decision → Human Review → Audit Trail**
+**Transaction event → deterministic signals → evidence-backed case → human decision → audit trail**
 
-The project uses **synthetic data only**. It is intentionally small, deterministic and inspectable rather than a black-box “AI detects fraud” demo.
+The project uses **synthetic data only**. It intentionally avoids black-box “AI detects fraud” claims and instead shows how data, integration boundaries, evidence and analyst review can fit together.
 
-## Why this exists
+## Golden demo
 
-Fraud teams need more than a score. They need to understand:
-
-- what happened,
-- which signals fired,
-- what evidence supports each signal,
-- what data is missing or low quality,
-- what an analyst should review next,
-- and how the final decision is recorded for later audit.
-
-FraudFlow focuses on that operational layer.
-
-## Golden scenario: card testing → escalation
-
-The demo contains a deliberately simple synthetic attack pattern:
-
-1. a new device appears,
-2. several low-value authorisation attempts arrive in rapid succession,
-3. transaction velocity crosses a threshold,
-4. a much larger follow-up transaction is attempted,
-5. FraudFlow opens a review case with evidence-backed signals.
-
-Example sequence:
+The main scenario simulates card testing followed by escalation:
 
 ```text
 09:41:02  €1.00
@@ -41,51 +20,22 @@ Example sequence:
 09:41:29  €499.00
 ```
 
-Expected decision: `REVIEW` or `BLOCK`, depending on the configured threshold.
+Expected behaviour:
 
-## What the demo proves
+- transaction velocity fires,
+- the final amount is anomalous versus the synthetic customer baseline,
+- FraudFlow creates a review case,
+- every signal exposes the evidence that produced it,
+- a human analyst can choose `ALLOW`, `REVIEW` or `BLOCK`,
+- the decision and visible evidence are retained in the audit trail.
 
-### 1. Event-driven thinking
+A separate behavioural eval covers **new device + impossible travel**. Routine synthetic activity is also tested as a negative case and must produce no fraud case.
 
-FraudFlow models a small payment/event flow rather than a static CSV-only analysis.
+## What this proves
 
-Example event types:
+### Event and integration thinking
 
-```text
-transaction.created
-device.changed
-payment.authorized
-velocity.threshold_exceeded
-```
-
-The implementation is local and lightweight, but the boundary is deliberately compatible with an event-stream architecture such as Kafka.
-
-### 2. Explainable fraud signals
-
-Each signal includes the exact evidence used to derive it.
-
-| Signal | Example evidence | Confidence |
-|---|---|---|
-| New device | first_seen = 09:40:51 | High |
-| Velocity | 5 attempts / 27 sec | High |
-| Amount anomaly | 17.3× customer baseline | Medium |
-| Impossible travel | Berlin → Singapore in 47 min | High |
-
-No LLM is allowed to invent fraud evidence or finalise a decision.
-
-### 3. Human-in-the-loop review
-
-A reviewer can choose:
-
-- `ALLOW`
-- `REVIEW`
-- `BLOCK`
-
-The system records who decided, when, why, and which evidence was visible at decision time.
-
-### 4. Integration boundaries
-
-The proof exposes a small REST interface designed around realistic integration points:
+The API is shaped around realistic system boundaries:
 
 ```text
 POST /events/transaction
@@ -94,70 +44,128 @@ POST /cases/{case_id}/decision
 GET  /cases/{case_id}/audit
 ```
 
-### 5. Evidence-first investigation
+The implementation is deliberately local and lightweight. These contracts could sit behind an event-stream architecture such as Kafka, but this project does **not** claim production Kafka experience.
 
-The case view links:
+### Explainable signals
+
+Signals are deterministic and inspectable. Current examples include:
+
+- transaction velocity,
+- amount anomaly,
+- new device,
+- impossible travel.
+
+Each signal carries the exact synthetic evidence used to derive it.
+
+### Human-in-the-loop decisions
+
+FraudFlow can recommend `REVIEW` or `BLOCK`, but the proof does not autonomously finalise a high-stakes fraud action. A human reviewer remains accountable for the final decision.
+
+### Evidence-first investigation
+
+The goal is not merely to produce a risk score. The reviewer should be able to answer:
+
+- what happened,
+- which signals fired,
+- what evidence supports them,
+- what should be reviewed next,
+- who made the final decision,
+- and what evidence was visible at that moment.
+
+## How I Build
+
+Every serious portfolio or production project follows the same six-stage system:
+
+**01 SHAPE** — Problem → user → constraints → architecture
+
+**02 SPECIFY** — Requirements → boundaries → acceptance criteria
+
+**03 DELEGATE** — Agents execute within explicit autonomy limits
+
+**04 PROVE** — Tests → evals → benchmarks → adversarial cases
+
+**05 SHIP** — CI → deployment gates → production
+
+**06 WATCH** — Traces → logs → regressions → feedback
+
+FraudFlow makes that process inspectable in the repository rather than leaving it as a claim.
+
+## Repository contract
 
 ```text
-CUSTOMER
-   │
- DEVICE ───── IP
-   │
- ACCOUNT
-   │
- TRANSACTION ─── MERCHANT
+fraudflow-dkb/
+├── .ai-build/
+│   ├── SPEC.md
+│   ├── ARCHITECTURE.md
+│   ├── DECISIONS.md
+│   ├── ACCEPTANCE.md
+│   ├── AUTONOMY.md
+│   ├── EVALS.md
+│   ├── RUNBOOK.md
+│   └── RETROSPECTIVE.md
+├── AGENTS.md
+├── app/
+├── evals/
+├── tests/
+├── evidence/
+├── scripts/
+├── .github/
+│   └── workflows/
+│       └── ci.yml
+├── pyproject.toml
+├── vercel.json
+├── requirements.txt
+└── README.md
 ```
 
-This is intentionally aligned with investigative workflows: the analyst should be able to trace a decision back to entities, signals and source events.
+`AGENTS.md` is the operating contract for coding agents. It defines the six stages, autonomy boundaries and completion gate.
+
+`scripts/check_build_os.py` fails CI if the required Build OS structure is missing or empty.
+
+## Proof, not promises
+
+The release gate is:
+
+```bash
+python scripts/check_build_os.py
+pytest -q
+python evals/run_evals.py --check
+python -m compileall -q app evals scripts
+```
+
+GitHub Actions executes the same checks on pushes and pull requests.
+
+The behavioural suite currently verifies:
+
+| Scenario | Expected result |
+|---|---|
+| Card testing → escalation | case created, risk 65, velocity + amount anomaly |
+| Routine customer activity | no case |
+| Berlin → Singapore + new device in 30 min | case created, risk 70, impossible travel + new device |
+| Human review | decision + visible evidence retained in audit trail |
+
+Reproducible output is stored under `evidence/`.
 
 ## Architecture
 
 ```text
-Synthetic Banking Service
-          │
-          ▼
-   Transaction Event
-          │
-          ▼
-   Validation Layer
-          │
-          ▼
-     Signal Engine
-   ┌──────┼────────┐
-   │      │        │
-Device  Velocity  Amount
-   │      │        │
-   └──────┴────────┘
-          │
-          ▼
-     Risk Decision
-          │
-          ▼
-      Fraud Case
-          │
-          ▼
-      Human Review
-          │
-          ▼
-       Audit Log
-```
-
-## Repository structure
-
-```text
-fraudflow-dkb/
-├── app/
-│   ├── main.py
-│   ├── models.py
-│   ├── rules.py
-│   ├── service.py
-│   └── seed.py
-├── tests/
-│   └── test_golden_case.py
-├── docs/
-│   └── REQUIREMENT_MAP.md
-├── requirements.txt
-└── README.md
+Synthetic transaction event
+          ↓
+      FastAPI boundary
+          ↓
+   deterministic rules
+          ↓
+ evidence-backed signals
+          ↓
+       risk score
+          ↓
+ case threshold (>= 50)
+          ↓
+ investigator cockpit
+          ↓
+ human decision
+          ↓
+       audit trail
 ```
 
 ## Run locally
@@ -169,68 +177,23 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
 
-Open:
+Open `http://127.0.0.1:8000/` for the investigator cockpit or `/docs` for the API.
 
-```text
-http://127.0.0.1:8000/docs
-```
+## Deliberate boundaries
 
-## Run the proof
+- synthetic data only,
+- no real DKB/customer/payment data,
+- no fabricated model accuracy,
+- no autonomous fraud blocking,
+- no claim that this is a production banking platform,
+- no LLM in the fraud decision path.
 
-Create the synthetic card-testing case:
-
-```bash
-curl -X POST http://127.0.0.1:8000/demo/card-testing
-```
-
-Then inspect it:
-
-```bash
-curl http://127.0.0.1:8000/cases/<case_id>
-```
-
-Record the analyst decision:
-
-```bash
-curl -X POST http://127.0.0.1:8000/cases/<case_id>/decision \
-  -H "Content-Type: application/json" \
-  -d '{"decision":"BLOCK","analyst":"demo-analyst","reason":"Card-testing pattern followed by high-value attempt"}'
-```
-
-## Verification
-
-```bash
-pytest -q
-```
-
-The golden-case test asserts that the attack sequence produces:
-
-- a persisted fraud case,
-- the expected high-value signals,
-- a non-allow risk decision,
-- evidence attached to every signal,
-- and an auditable human decision.
-
-## Deliberate design choices
-
-**Synthetic data only** — no real customer or payment data.
-
-**Deterministic core** — fraud signals are inspectable rules, not fabricated model output.
-
-**LLM-free decision path** — language models can be useful around investigation and summarisation, but they are not required for this proof and do not control blocking decisions.
-
-**Small scope** — the goal is to prove fraud-data integration, technical analysis and explainability, not pretend to rebuild a bank fraud platform.
+The point is to make the reasoning, interfaces, evidence and engineering process easy to inspect.
 
 ## Portfolio connection
 
-FraudFlow extends ideas from my other evidence-grounded systems work:
-
-- **SafeTrace** — entity resolution and evidence chains
-- **SignalLab** — data quality, signals, drift and human review
-- **GitLaw** — traceable evidence and reproducibility
-
-FraudFlow applies those principles to a fraud-operations workflow.
+FraudFlow applies patterns from my evidence-grounded systems work to fraud operations: entity/evidence thinking, signal reliability, reproducibility, human review and auditable decisions.
 
 ## Application angle
 
-> I build inspectable data systems between domain teams and engineering — from API and data model to signal, human review and audit trail. FraudFlow is a deliberately small synthetic proof showing how I would reason about integrating and operationalising fraud signals without hiding decisions behind black-box AI.
+> I build inspectable data systems between domain teams and engineering — from API and data model to signal, human review and audit trail. FraudFlow is a deliberately small synthetic proof showing how I reason about integrating and operationalising fraud signals without hiding decisions behind black-box AI.
