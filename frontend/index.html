@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>FraudFlow — DKB Arbeitsprobe</title>
-  <link rel="stylesheet" href="/ui/styles.css" />
+  <link rel="stylesheet" href="./ui/styles.css" />
 </head>
 <body>
   <main class="app-shell">
@@ -15,7 +15,7 @@
       </a>
       <div class="topbar-actions">
         <a class="quiet-link" href="https://github.com/mikelninh/fraudflow-dkb" target="_blank" rel="noreferrer">Repository ↗</a>
-        <span class="status-chip">Unabhängige Arbeitsprobe · synthetische Daten</span>
+        <span class="status-chip">Unabhängige Arbeitsprobe · nur Demo-Daten</span>
       </div>
     </header>
 
@@ -23,18 +23,18 @@
       <div class="hero-copy">
         <p class="eyebrow">Fraud Data · verständlich statt Black Box</p>
         <h1>Wie aus fünf Zahlungen ein <span>prüfbarer Betrugsverdacht</span> wird.</h1>
-        <p class="lede">Eine kleine Arbeitsprobe dafür, wie ich Anforderungen in einen nachvollziehbaren Fraud-Workflow übersetze: Was ist passiert? Warum ist es auffällig? Was soll ein Mensch als Nächstes tun?</p>
+        <p class="lede">Eine kleine Arbeitsprobe dafür, wie ich einen Fraud-Prozess in ein nachvollziehbares System übersetze: Was ist passiert? Warum ist es auffällig? Was soll ein Mensch als Nächstes tun?</p>
         <div class="hero-actions">
           <button class="primary" id="startDemo">90-Sekunden-Fall starten</button>
-          <a class="secondary" href="#proof">Beweise ansehen</a>
+          <a class="secondary" href="#proof">Nachweise ansehen</a>
         </div>
-        <div class="hero-note"><strong>Sie brauchen kein Fraud-Vorwissen.</strong> Die Demo zeigt fünf erfundene Zahlungen und erklärt Schritt für Schritt, warum der Vorgang geprüft werden sollte.</div>
+        <div class="hero-note"><strong>Kein Fraud-Vorwissen nötig.</strong> Die Demo zeigt fünf erfundene Zahlungen und erklärt Schritt für Schritt, warum der Vorgang geprüft werden sollte.</div>
       </div>
       <aside class="role-card">
-        <p class="eyebrow">Was diese Arbeitsprobe zeigt</p>
-        <div class="role-row"><span>1</span><div><strong>Ich verstehe den Fachprozess.</strong><small>Von einem auffälligen Vorgang bis zur menschlichen Entscheidung.</small></div></div>
-        <div class="role-row"><span>2</span><div><strong>Ich übersetze ihn in ein System.</strong><small>Daten, API-Grenzen, Regeln und Audit-Trail sind explizit.</small></div></div>
-        <div class="role-row"><span>3</span><div><strong>Ich beweise das Verhalten.</strong><small>Positive, negative und adversariale Tests laufen in CI.</small></div></div>
+        <p class="eyebrow">Was ich damit zeigen möchte</p>
+        <div class="role-row"><span>1</span><div><strong>Problem verstanden</strong><small>Ein auffälliger Vorgang muss schnell verständlich werden.</small></div></div>
+        <div class="role-row"><span>2</span><div><strong>Klare Entscheidungshilfe gebaut</strong><small>Das System erklärt Gründe. Ein Mensch entscheidet.</small></div></div>
+        <div class="role-row"><span>3</span><div><strong>Verhalten überprüft</strong><small>Nicht nur ein schöner Demo-Fall: auch Normalfälle und Gegenbeispiele werden getestet.</small></div></div>
       </aside>
     </section>
 
@@ -42,7 +42,7 @@
       <div class="journey-step active"><span>1</span><strong>Vorgang ansehen</strong><small>Was passiert?</small></div>
       <div class="journey-step"><span>2</span><strong>Verdacht verstehen</strong><small>Warum auffällig?</small></div>
       <div class="journey-step"><span>3</span><strong>Entscheiden</strong><small>Mensch bleibt verantwortlich</small></div>
-      <div class="journey-step"><span>4</span><strong>Beweise prüfen</strong><small>Nicht einfach glauben</small></div>
+      <div class="journey-step"><span>4</span><strong>Nachweise prüfen</strong><small>Nicht einfach glauben</small></div>
     </section>
 
     <section class="workspace" id="investigation">
@@ -51,9 +51,9 @@
           <div><p class="eyebrow">Schritt 1</p><h2>Was ist passiert?</h2></div>
           <span class="mini-chip" id="eventCount">0 / 5 Zahlungen</span>
         </div>
-        <p class="panel-help">Wir sehen nur die Ausgangsdaten. Noch keine Interpretation.</p>
+        <p class="panel-help">Zuerst nur die Ausgangsdaten. Noch keine Bewertung.</p>
         <div id="eventStream" class="event-stream">
-          <div class="empty-state"><span>→</span><strong>Fall starten</strong><small>Die fünf synthetischen Zahlungen erscheinen hier nacheinander.</small></div>
+          <div class="empty-state"><span>→</span><strong>Fall starten</strong><small>Die fünf Demo-Zahlungen erscheinen hier nacheinander.</small></div>
         </div>
       </article>
 
@@ -62,24 +62,24 @@
           <div><p class="eyebrow">Schritt 2</p><h2>Warum sollte jemand hinschauen?</h2></div>
           <span class="decision-badge waiting" id="recommendation">NOCH NICHTS</span>
         </div>
-        <p class="panel-help">FraudFlow soll nicht nur Alarm schlagen, sondern den Grund so erklären, dass auch Nicht-Techniker folgen können.</p>
+        <p class="panel-help">Ein Alarm reicht nicht. Der Grund muss sofort verständlich sein.</p>
         <div id="caseView" class="case-empty">
-          <div class="empty-state"><span>?</span><strong>Noch kein Verdacht</strong><small>Erst wenn etwas wirklich ungewöhnlich wird, erscheint hier eine Erklärung.</small></div>
+          <div class="empty-state"><span>?</span><strong>Noch kein Verdacht</strong><small>Erst wenn sich das Verhalten deutlich verändert, erscheint hier eine Erklärung.</small></div>
         </div>
       </article>
 
       <article class="panel evidence-panel">
         <div class="panel-heading">
           <div><p class="eyebrow">Schritt 3</p><h2>Was soll jetzt passieren?</h2></div>
-          <span class="mini-chip">Human in the loop</span>
+          <span class="mini-chip">Mensch entscheidet</span>
         </div>
-        <p class="panel-help">Das System empfiehlt. Ein Mensch entscheidet.</p>
+        <p class="panel-help">FraudFlow empfiehlt eine Prüfung und zeigt die Gründe. Die finale Entscheidung bleibt beim Menschen.</p>
         <div id="signalList" class="signal-list">
-          <div class="empty-state compact"><span>✓</span><strong>Warten auf Auffälligkeiten</strong><small>Wenn etwas auffällt, wird hier der Grund in Klartext erklärt.</small></div>
+          <div class="empty-state compact"><span>✓</span><strong>Warten auf Auffälligkeiten</strong><small>Wenn etwas auffällt, wird der Grund hier in Klartext erklärt.</small></div>
         </div>
         <div id="decisionControls"></div>
         <div class="audit-card">
-          <div class="audit-title"><strong>Entscheidung dokumentiert</strong><span>für spätere Prüfung</span></div>
+          <div class="audit-title"><strong>Was wurde dokumentiert?</strong><span>für spätere Prüfung</span></div>
           <div id="auditTrail" class="audit-list"><p>Noch keine Entscheidung.</p></div>
         </div>
       </article>
@@ -89,13 +89,13 @@
       <div>
         <p class="eyebrow">Der Fall in einem Satz</p>
         <h2>Viele Mini-Zahlungen. Dann plötzlich €499.</h2>
-        <p class="section-copy">FraudFlow erkennt nicht „Betrug“. Es erkennt ein ungewöhnliches Muster, erklärt warum und legt den Fall einem Menschen zur Prüfung vor.</p>
+        <p class="section-copy">FraudFlow behauptet nicht „Das ist Betrug“. Es erkennt ein ungewöhnliches Muster, erklärt warum und legt den Vorgang einem Menschen zur Prüfung vor.</p>
       </div>
       <div class="question-grid">
         <article><span>01</span><strong>Was sehen wir?</strong><p>Fünf Zahlungen innerhalb von 27 Sekunden.</p></article>
         <article><span>02</span><strong>Was ist ungewöhnlich?</strong><p>Die ersten Beträge sind winzig. Danach springt der Betrag auf €499.</p></article>
         <article><span>03</span><strong>Was macht das System?</strong><p>Es empfiehlt eine Prüfung statt automatisch zu blockieren.</p></article>
-        <article><span>04</span><strong>Wer entscheidet?</strong><p>Ein Analyst sieht die Gründe und trifft die finale Entscheidung.</p></article>
+        <article><span>04</span><strong>Was bleibt nachvollziehbar?</strong><p>Die Gründe und die menschliche Entscheidung werden dokumentiert.</p></article>
       </div>
     </section>
 
@@ -103,27 +103,27 @@
       <div class="proof-intro">
         <p class="eyebrow">Nachvollziehbare Beweise</p>
         <h2>Nicht einfach glauben. Nachprüfen.</h2>
-        <p>Die schöne Oberfläche ist nur die Erklärung. Der eigentliche Nachweis sind ausführbare Tests, Behavioural Evals und CI.</p>
+        <p>Die Oberfläche erklärt den Fall. Der eigentliche Nachweis liegt in ausführbaren Tests, Prüfszenarien und dem automatischen GitHub-Check.</p>
       </div>
       <div class="proof-dashboard">
-        <div class="proof-score"><span id="proofScore">—</span><small>Behavioural Evals bestehen</small></div>
+        <div class="proof-score"><span id="proofScore">—</span><small>Prüfszenarien bestanden</small></div>
         <div class="proof-items" id="proofItems">
           <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
         </div>
       </div>
       <div class="proof-links">
         <a href="https://github.com/mikelninh/fraudflow-dkb/blob/main/evidence/PROOF_INDEX.md" target="_blank" rel="noreferrer"><strong>Proof Index</strong><small>Behauptung → Beweis ↗</small></a>
-        <a href="https://github.com/mikelninh/fraudflow-dkb/actions" target="_blank" rel="noreferrer"><strong>CI ansehen</strong><small>Tests + Evals + Build OS ↗</small></a>
-        <a href="https://github.com/mikelninh/fraudflow-dkb/blob/main/.ai-build/ACCEPTANCE.md" target="_blank" rel="noreferrer"><strong>Wann ist es fertig?</strong><small>Acceptance Criteria ↗</small></a>
+        <a href="https://github.com/mikelninh/fraudflow-dkb/actions" target="_blank" rel="noreferrer"><strong>Automatische Checks</strong><small>Tests + Evals + Build OS ↗</small></a>
+        <a href="https://github.com/mikelninh/fraudflow-dkb/blob/main/.ai-build/ACCEPTANCE.md" target="_blank" rel="noreferrer"><strong>Wann ist es fertig?</strong><small>Abnahmekriterien ↗</small></a>
         <a href="https://github.com/mikelninh/fraudflow-dkb/blob/main/docs/UX_PRINCIPLES.md" target="_blank" rel="noreferrer"><strong>Für wen ist das gebaut?</strong><small>Reviewer-first UX ↗</small></a>
       </div>
     </section>
 
     <section class="role-map-section">
       <div class="proof-intro">
-        <p class="eyebrow">Für die DKB-Rolle</p>
-        <h2>Was zeigt diese Arbeitsprobe über meine Arbeit?</h2>
-        <p>Für Engineers bleiben die technischen Nachweise direkt verlinkt. Für HR reicht die kurze Erklärung.</p>
+        <p class="eyebrow">Für Hiring Manager & Engineers</p>
+        <h2>Wie passt das zur DKB-Rolle?</h2>
+        <p>Hier wird die Stellenanforderung jeweils mit einem konkreten, anklickbaren Nachweis aus dem Repository verbunden.</p>
       </div>
       <div class="role-map" id="roleMap"></div>
     </section>
@@ -137,6 +137,6 @@
 
     <footer><span>FraudFlow · unabhängige Arbeitsprobe</span><span>DKB-inspirierte Farbwelt, keine offizielle DKB-Produktoberfläche.</span></footer>
   </main>
-  <script src="/ui/app.js" defer></script>
+  <script src="./ui/app.js" defer></script>
 </body>
 </html>
