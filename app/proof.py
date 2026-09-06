@@ -1,36 +1,36 @@
 ROLE_MAP = [
     {
-        "requirement": "Translate business requirements into implementable technical requirements",
-        "proof": "Explicit SPEC + ACCEPTANCE contracts, typed event/case models and a small REST boundary.",
+        "requirement": "Fachliche Anforderungen in ein technisches System übersetzen",
+        "proof": "Explizite Anforderungen und Acceptance Criteria plus klar getrennte Event-, Case- und API-Modelle.",
         "url": "https://github.com/mikelninh/fraudflow-dkb/blob/main/.ai-build/SPEC.md",
     },
     {
-        "requirement": "Analyse data structures, models and cross-system data flows",
-        "proof": "TransactionEvent → deterministic signal engine → FraudCase → human decision → AuditEntry.",
+        "requirement": "Datenflüsse und Abhängigkeiten nachvollziehen",
+        "proof": "Zahlung → auffälliges Muster → Fraud Case → menschliche Entscheidung → Audit-Trail.",
         "url": "https://github.com/mikelninh/fraudflow-dkb/blob/main/.ai-build/ARCHITECTURE.md",
     },
     {
-        "requirement": "Work with REST APIs and event-driven architectures",
-        "proof": "Event-shaped ingestion API and documented boundary that is Kafka-compatible without claiming production Kafka experience.",
+        "requirement": "Mit APIs und event-getriebenen Systemen arbeiten",
+        "proof": "Event-basierte REST-Schnittstelle; Kafka-kompatible Systemgrenze ohne behauptete Production-Kafka-Erfahrung.",
         "url": "https://github.com/mikelninh/fraudflow-dkb/blob/main/app/main.py",
     },
     {
-        "requirement": "Accompany implementation from requirements through testing",
-        "proof": "Golden, negative and adversarial behavioural evals plus CI gates and a release runbook.",
+        "requirement": "Umsetzung mit Tests und klaren Abnahmekriterien begleiten",
+        "proof": "Golden Case, Negativfall, adversarialer Fall, Behavioural Evals und CI-Gate.",
         "url": "https://github.com/mikelninh/fraudflow-dkb/blob/main/.ai-build/EVALS.md",
     },
     {
-        "requirement": "Communicate complex technical topics clearly",
-        "proof": "Hiring-manager-first cockpit plus explicit USERS.md for HR, fraud lead and engineer review paths.",
-        "url": "https://github.com/mikelninh/fraudflow-dkb/blob/main/.ai-build/USERS.md",
+        "requirement": "Komplexe technische Themen verständlich kommunizieren",
+        "proof": "Einfache Reviewer-Journey für HR/Hiring Manager; technische Details bleiben für Engineers prüfbar.",
+        "url": "https://github.com/mikelninh/fraudflow-dkb/blob/main/docs/UX_PRINCIPLES.md",
     },
 ]
 
 EVAL_LABELS = {
-    "card_testing_escalation": "Card testing → escalation",
-    "routine_customer_no_alert": "Routine customer → no false alert",
-    "impossible_travel_takeover": "Impossible travel + new device",
-    "human_decision_audit": "Human decision → audit evidence",
+    "card_testing_escalation": "Auffälliges Kartenmuster wird erkannt",
+    "routine_customer_no_alert": "Normales Verhalten löst keinen falschen Alarm aus",
+    "impossible_travel_takeover": "Neues Gerät + unmöglicher Standortwechsel werden erkannt",
+    "human_decision_audit": "Menschliche Entscheidung bleibt nachvollziehbar",
 }
 
 
@@ -38,13 +38,13 @@ def proof_summary(results: dict) -> dict:
     evaluations = []
     for key, value in results.get("results", {}).items():
         if key == "card_testing_escalation":
-            detail = f"risk {value.get('risk_score')} · {', '.join(value.get('signals', []))}"
+            detail = "5 Zahlungen in kurzer Folge; Fall wird mit nachvollziehbaren Gründen eröffnet"
         elif key == "routine_customer_no_alert":
-            detail = "0 cases created for routine synthetic activity"
+            detail = "0 Fälle bei normaler synthetischer Nutzung"
         elif key == "impossible_travel_takeover":
-            detail = f"risk {value.get('risk_score')} · {', '.join(value.get('signals', []))}"
+            detail = "neues Gerät + schneller Länderwechsel erzeugen einen Prüffall"
         else:
-            detail = f"{value.get('last_action')} · evidence retained: {value.get('evidence_visible')}"
+            detail = "Entscheidung und sichtbare Evidenz werden im Audit-Trail gespeichert"
         evaluations.append({
             "key": key,
             "label": EVAL_LABELS.get(key, key.replace("_", " ").title()),
