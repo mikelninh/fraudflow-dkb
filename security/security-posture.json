@@ -1,0 +1,26 @@
+{
+  "version": "security-posture/v1",
+  "project": { "id": "fraudflow-dkb", "repository": "mikelninh/fraudflow-dkb", "domain": "fraud operations and deterministic decision support" },
+  "thesis": "The critical fraud decision path is deterministic and evidence-backed; AI is not required to calculate risk or take customer-impacting action.",
+  "controls": [
+    { "id": "authority_outside_model", "status": "implemented", "evidence": [{ "type": "doc", "path": "README.md", "claim": "Deterministic fraud signals create review cases and the human analyst retains final decision authority." }] },
+    { "id": "least_privilege", "status": "not_applicable", "evidence": [{ "type": "doc", "path": "README.md", "claim": "There is no autonomous agent/tool execution in the critical decision path." }] },
+    { "id": "tenant_isolation", "status": "not_proven", "evidence": [{ "type": "doc", "path": "README.md", "claim": "The work sample uses synthetic data and does not claim production banking tenancy." }] },
+    { "id": "human_approval", "status": "implemented", "evidence": [{ "type": "test", "path": "evals/run_evals.py", "claim": "Human decision retention in the audit trail is part of the behavioral proof." }] },
+    { "id": "provenance", "status": "implemented", "evidence": [{ "type": "doc", "path": "README.md", "claim": "Source payment events map to deterministic evidence-backed signals and review cases." }, { "type": "report", "path": "evidence/eval-results.json", "claim": "Committed behavioral evidence is read by the product proof surface rather than invented by the frontend." }] },
+    { "id": "protected_data", "status": "partial", "evidence": [{ "type": "doc", "path": "README.md", "claim": "Only synthetic payment/customer data is used; real bank data controls are outside this work sample." }] },
+    { "id": "bounded_execution", "status": "not_applicable", "evidence": [{ "type": "doc", "path": "README.md", "claim": "No autonomous LLM/tool loop exists in the decision path." }] },
+    { "id": "auditability", "status": "implemented", "evidence": [{ "type": "doc", "path": "README.md", "claim": "Evidence, human decision and AuditEntry form a reproducible reviewer-to-engineer proof chain." }] },
+    { "id": "supply_chain", "status": "not_proven", "evidence": [{ "type": "doc", "path": "README.md", "claim": "No production banking supply-chain assurance claim is made." }] },
+    { "id": "adversarial_evals", "status": "not_proven", "evidence": [{ "type": "doc", "path": "README.md", "claim": "The four behavioral evals test correctness and negative cases, not a dedicated security red-team suite." }] },
+    { "id": "production_monitoring", "status": "not_proven", "evidence": [{ "type": "doc", "path": "README.md", "claim": "No production Kafka, bank integration or production monitoring claim is made." }] }
+  ],
+  "adversarial": { "taxonomy": "No dedicated agentic-security gauntlet; the critical path is deliberately non-agentic", "cases": 0, "passed": 0, "criticalEscapes": 0, "liveModel": false },
+  "claims": { "productionSecure": false, "promptInjectionSolved": false, "certified": false },
+  "residualRisks": [
+    "Existing behavioral evals are correctness evidence, not security red-team evidence.",
+    "Real bank identity, data-access, transaction-platform and analyst-authorization controls remain outside this synthetic work sample.",
+    "If an LLM is later added for explanation or operations, it should remain outside risk scoring and customer-impacting authority unless separately proven.",
+    "Production monitoring and incident-response evidence are not claimed."
+  ]
+}
