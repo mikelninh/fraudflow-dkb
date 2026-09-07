@@ -168,7 +168,8 @@ async function loadProof() {
     const proof = await response.json();
     $('#proofScore').textContent = `${proof.passed}/${proof.total}`;
     $('#proofItems').innerHTML = proof.evals.map((item) => `<div class="proof-item"><span class="proof-check">✓</span><div><strong>${escapeHtml(item.label)}</strong><small>${escapeHtml(item.detail)}</small></div><span>BESTANDEN</span></div>`).join('');
-    $('#roleMap').innerHTML = proof.role_map.map((item) => `<div class="role-map-row"><strong>${escapeHtml(item.requirement)}</strong><p>${escapeHtml(item.proof)}</p><a href="${escapeHtml(item.url)}" target="_blank" rel="noreferrer">Beweis öffnen ↗</a></div>`).join('');
+    const capabilities = proof.capability_map || proof.role_map || [];
+    $('#roleMap').innerHTML = capabilities.map((item) => `<div class="role-map-row"><strong>${escapeHtml(item.requirement)}</strong><p>${escapeHtml(item.proof)}</p><a href="${escapeHtml(item.url)}" target="_blank" rel="noreferrer">Beweis öffnen ↗</a></div>`).join('');
   } catch (error) {
     $('#proofScore').textContent = '—';
     $('#proofItems').innerHTML = '<div class="proof-item"><span>!</span><div><strong>Beweise konnten nicht geladen werden</strong><small>Die Belege im Repository bleiben direkt prüfbar.</small></div><span>PRÜFEN</span></div>';

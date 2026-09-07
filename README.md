@@ -1,57 +1,53 @@
-# FraudFlow — DKB Fraud Data & Integration Proof
+# FraudFlow — Fraud Operations & Decision Systems
 
-A role-specific work sample for **Junior Tech Analyst Fraud Data & Analytics**.
+A reusable proof-of-work for **fraud data, prevention, controls and platform roles**.
 
-> **Goal:** let a hiring manager understand the fraud workflow in under 90 seconds, while giving engineers direct access to the source events, rules, tests, evals, CI and architecture decisions behind it.
+> **Goal:** let a non-technical reviewer understand the fraud workflow quickly, while giving engineers direct access to the source events, rules, tests, evals, CI and architecture decisions behind it.
+
+FraudFlow is deliberately **company-neutral**. The same verified product can support different applications without turning the repository or UI into a branded hiring exercise.
 
 ## Start here
 
-The reviewer-facing product is the first-class `frontend/` application served by FastAPI.
+The reviewer-facing product is the first-class `frontend/` application served by FastAPI and built to GitHub Pages.
 
 The guided flow is:
 
-**Source events → Why did a case open? → Signal evidence → Human decision → Executable proof**
+**Source payments → plain-language reasons → human decision → reproducible proof**
 
 The primary demo replays five synthetic card-testing transactions, ending in a €499 escalation. FraudFlow creates an explainable review case from deterministic rules and keeps the human analyst responsible for the final action.
 
 ## What makes this a proof rather than a dashboard
 
-The UI exposes two different layers deliberately:
+The UI exposes two layers deliberately:
 
-1. **Investigation layer** — raw events, signal evidence, risk reasoning, analyst decision and audit trace.
-2. **Verification layer** — behavioural eval results, CI, acceptance criteria, explicit users and DKB-role requirement mapping.
+1. **Reviewer layer** — what happened, why it is unusual, and what a human should do next.
+2. **Verification layer** — source evidence, behavioural eval results, CI, acceptance criteria and architecture decisions.
 
-The frontend never manufactures proof status. `/proof/summary` reads the committed behavioural-eval evidence from `evidence/eval-results.json`.
+The frontend never manufactures proof status. `/proof/summary` reads committed behavioural-eval evidence from `evidence/eval-results.json`.
 
 ## Explicit users
 
 See `.ai-build/USERS.md`.
 
-- **Hiring manager / fraud lead:** “Does Michael understand the actual Tech Analyst work?”
+- **Hiring manager / fraud lead:** “Does Michael understand fraud operations well enough to translate them into a reliable system?”
 - **Engineer / platform teammate:** “Can I trace the behaviour and verify it?”
-- **Recruiter / HR:** “Why is this relevant and what did Michael build?”
+- **Recruiter / HR:** “What did Michael build, why is it useful, and where could this apply?”
 
-Every major UI section must answer one of five questions:
+## Reusable capability map
 
-1. What am I looking at?
-2. What should I do next?
-3. Why did the system do that?
-4. What evidence proves it?
-5. How does this map to the role?
-
-## Target-role mapping
-
-| Role responsibility | FraudFlow evidence |
+| Capability | FraudFlow evidence |
 |---|---|
-| Translate business requirements into technical requirements | `.ai-build/SPEC.md`, `ACCEPTANCE.md`, typed domain models |
-| Analyse data structures, models and cross-system flows | `TransactionEvent → Signal → FraudCase → AuditEntry` architecture |
-| REST APIs, event-driven architecture and interface thinking | FastAPI event boundary + explicit Kafka-compatible/non-production boundary |
-| Accompany implementation through testing | tests + behavioural evals + CI release gate + runbook |
-| Communicate complex topics clearly | guided hiring-manager frontend + role map + explicit users |
+| Fraud Data & Analytics | typed payment events → deterministic signals → review case |
+| Fraud Prevention & Controls | explainable patterns + negative cases + human review |
+| Platform & Integration | FastAPI boundaries + typed models + event-oriented contracts |
+| Governance & Auditability | evidence → human decision → audit + reproducible proof |
+| Communication & Product Thinking | plain-language reviewer journey + engineer deep dive |
+
+The **application** can emphasize different rows. The **product and evidence remain the same**.
 
 ## Behavioural proof
 
-The current suite requires all four cases to pass:
+The suite requires all four cases to pass:
 
 | Eval | Expected result |
 |---|---|
@@ -66,6 +62,7 @@ Run:
 python scripts/check_build_os.py
 pytest -q
 python evals/run_evals.py --check
+python scripts/build_pages.py
 python -m compileall -q app evals scripts
 ```
 
@@ -101,40 +98,6 @@ human decision
 AuditEntry
 ```
 
-## Repository structure
-
-```text
-fraudflow-dkb/
-├── .ai-build/
-│   ├── SPEC.md
-│   ├── USERS.md
-│   ├── ARCHITECTURE.md
-│   ├── DECISIONS.md
-│   ├── ACCEPTANCE.md
-│   ├── AUTONOMY.md
-│   ├── EVALS.md
-│   ├── RUNBOOK.md
-│   └── RETROSPECTIVE.md
-├── AGENTS.md
-├── frontend/
-│   ├── index.html
-│   ├── styles.css
-│   └── app.js
-├── app/
-│   ├── main.py
-│   ├── models.py
-│   ├── rules.py
-│   ├── service.py
-│   ├── proof.py
-│   └── seed.py
-├── evals/
-├── tests/
-├── evidence/
-├── scripts/
-├── .github/workflows/
-└── README.md
-```
-
 ## How I Build
 
 **01 SHAPE** — Problem → user → constraints → architecture
@@ -154,14 +117,22 @@ The process is enforced by `AGENTS.md`, `scripts/check_build_os.py` and CI rathe
 ## Deliberate honesty
 
 - synthetic data only
-- no real DKB/customer/payment data
-- no copied DKB product UI or logo
+- no real bank/customer/payment data
+- no copied company product UI or logo
 - no production-banking claim
 - no fabricated ML accuracy
 - no autonomous fraud blocking
 - no production Kafka claim
 - no LLM in the decision path
 
-## Application angle
+## Application principle
 
-> I build inspectable systems between domain teams and engineering — translating requirements into data contracts, APIs, evidence-backed behaviour, tests and operational hand-off. FraudFlow is a deliberately small fraud-data proof where every important decision can be traced and verified.
+Do not fork FraudFlow for every company.
+
+Instead, keep one verified core and change only the application narrative:
+
+- **data / tech analyst lens:** data flows, APIs, models, event boundaries, testing
+- **fraud prevention / AFC lens:** anomalies, controls, human review, KRIs and documentation
+- **fraud platform lens:** integrations, evidence contracts, reliability and operational hand-off
+
+> I build inspectable systems between fraud operations and engineering — translating messy behaviour into evidence-backed signals, human decisions, APIs, tests and auditability.

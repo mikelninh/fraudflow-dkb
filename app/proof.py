@@ -1,27 +1,27 @@
-ROLE_MAP = [
+CAPABILITY_MAP = [
     {
-        "requirement": "Fachliche Anforderungen in ein technisches System übersetzen",
-        "proof": "Explizite Anforderungen und Acceptance Criteria plus klar getrennte Event-, Case- und API-Modelle.",
-        "url": "https://github.com/mikelninh/fraudflow-dkb/blob/main/.ai-build/SPEC.md",
-    },
-    {
-        "requirement": "Datenflüsse und Abhängigkeiten nachvollziehen",
-        "proof": "Zahlung → auffälliges Muster → Fraud Case → menschliche Entscheidung → Audit-Trail.",
+        "requirement": "Fraud Data & Analytics",
+        "proof": "Zahlungen werden als strukturierte Events verarbeitet und in nachvollziehbare Signale, Fälle und Entscheidungen übersetzt.",
         "url": "https://github.com/mikelninh/fraudflow-dkb/blob/main/.ai-build/ARCHITECTURE.md",
     },
     {
-        "requirement": "Mit APIs und event-getriebenen Systemen arbeiten",
-        "proof": "Event-basierte REST-Schnittstelle; Kafka-kompatible Systemgrenze ohne behauptete Production-Kafka-Erfahrung.",
-        "url": "https://github.com/mikelninh/fraudflow-dkb/blob/main/app/main.py",
-    },
-    {
-        "requirement": "Umsetzung mit Tests und klaren Abnahmekriterien begleiten",
-        "proof": "Golden Case, Negativfall, adversarialer Fall, Behavioural Evals und CI-Gate.",
+        "requirement": "Fraud Prevention & Controls",
+        "proof": "Auffällige Muster erzeugen einen erklärbaren Prüffall; Normalverhalten wird als Negativfall getestet und ein Mensch behält die finale Entscheidung.",
         "url": "https://github.com/mikelninh/fraudflow-dkb/blob/main/.ai-build/EVALS.md",
     },
     {
-        "requirement": "Komplexe technische Themen verständlich kommunizieren",
-        "proof": "Einfache Reviewer-Journey für HR/Hiring Manager; technische Details bleiben für Engineers prüfbar.",
+        "requirement": "Platform & Integration",
+        "proof": "Typed domain models, FastAPI-Grenzen und event-orientierte Schnittstellen zeigen die Übersetzung von Fraud-Anforderungen in technische Verträge.",
+        "url": "https://github.com/mikelninh/fraudflow-dkb/blob/main/app/main.py",
+    },
+    {
+        "requirement": "Governance & Auditability",
+        "proof": "Signalgründe, menschliche Entscheidungen, Audit-Trail, Acceptance Criteria und reproduzierbare Evidence bleiben prüfbar.",
+        "url": "https://github.com/mikelninh/fraudflow-dkb/blob/main/evidence/PROOF_INDEX.md",
+    },
+    {
+        "requirement": "Communication & Product Thinking",
+        "proof": "Die Hauptjourney erklärt denselben technischen Vorgang zuerst in Alltagssprache; Engineer-Details bleiben bei Bedarf zugänglich.",
         "url": "https://github.com/mikelninh/fraudflow-dkb/blob/main/docs/UX_PRINCIPLES.md",
     },
 ]
@@ -52,4 +52,9 @@ def proof_summary(results: dict) -> dict:
             "detail": detail,
         })
     passed = sum(1 for item in evaluations if item["passed"])
-    return {"passed": passed, "total": len(evaluations), "evals": evaluations, "role_map": ROLE_MAP}
+    return {
+        "passed": passed,
+        "total": len(evaluations),
+        "evals": evaluations,
+        "capability_map": CAPABILITY_MAP,
+    }

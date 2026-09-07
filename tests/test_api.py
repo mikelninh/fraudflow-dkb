@@ -16,10 +16,13 @@ def test_investigator_cockpit_route():
     response = client.get("/")
     assert response.status_code == 200
     assert "FraudFlow" in response.text
+    assert "Fraud Operations & Decision Systems" in response.text
     assert "90-Sekunden-Fall starten" in response.text
     assert "Warum sollte jemand hinschauen?" in response.text
     assert "Kein Fraud-Vorwissen nötig" in response.text
-    assert "Problem verstanden" in response.text
+    assert "Wo diese Arbeit einsetzbar ist" in response.text
+    assert "DKB Arbeitsprobe" not in response.text
+    assert "N26" not in response.text
 
 
 def test_frontend_assets_are_served():
@@ -33,8 +36,10 @@ def test_proof_summary_exposes_reproducible_eval_results():
     assert response.status_code == 200
     payload = response.json()
     assert payload["passed"] == payload["total"] == 4
-    assert len(payload["role_map"]) >= 5
+    assert len(payload["capability_map"]) >= 5
+    assert "role_map" not in payload
     assert any("Normales Verhalten" in item["label"] for item in payload["evals"])
+    assert any(item["requirement"] == "Fraud Prevention & Controls" for item in payload["capability_map"])
 
 
 def test_card_testing_demo_is_repeatable_and_source_traceable():

@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FraudFlow — DKB Arbeitsprobe</title>
+  <title>FraudFlow — Fraud Operations & Decision Systems</title>
+  <meta name="description" content="Explainable fraud operations work sample: suspicious payment patterns, human review, auditability and reproducible proof." />
   <link rel="stylesheet" href="./ui/styles.css" />
 </head>
 <body>
@@ -11,7 +12,7 @@
     <header class="topbar">
       <a class="brand" href="#top" aria-label="FraudFlow Startseite">
         <span class="brand-mark">FF</span>
-        <span><strong>FraudFlow</strong><small>Arbeitsprobe · Junior Tech Analyst Fraud Data & Analytics</small></span>
+        <span><strong>FraudFlow</strong><small>Fraud Operations & Decision Systems</small></span>
       </a>
       <div class="topbar-actions">
         <a class="quiet-link" href="https://github.com/mikelninh/fraudflow-dkb" target="_blank" rel="noreferrer">Repository ↗</a>
@@ -21,9 +22,9 @@
 
     <section class="hero" id="top">
       <div class="hero-copy">
-        <p class="eyebrow">Fraud Data · verständlich statt Black Box</p>
-        <h1>Wie aus fünf Zahlungen ein <span>prüfbarer Betrugsverdacht</span> wird.</h1>
-        <p class="lede">Eine kleine Arbeitsprobe dafür, wie ich einen Fraud-Prozess in ein nachvollziehbares System übersetze: Was ist passiert? Warum ist es auffällig? Was soll ein Mensch als Nächstes tun?</p>
+        <p class="eyebrow">Fraud Operations · verständlich statt Black Box</p>
+        <h1>Wie aus fünf Zahlungen ein <span>prüfbarer Verdacht</span> wird.</h1>
+        <p class="lede">Eine Arbeitsprobe dafür, wie ich auffälliges Zahlungsverhalten in einen nachvollziehbaren Prozess übersetze: Was ist passiert? Warum lohnt sich eine Prüfung? Was soll ein Mensch als Nächstes tun?</p>
         <div class="hero-actions">
           <button class="primary" id="startDemo">90-Sekunden-Fall starten</button>
           <a class="secondary" href="#proof">Nachweise ansehen</a>
@@ -31,10 +32,10 @@
         <div class="hero-note"><strong>Kein Fraud-Vorwissen nötig.</strong> Die Demo zeigt fünf erfundene Zahlungen und erklärt Schritt für Schritt, warum der Vorgang geprüft werden sollte.</div>
       </div>
       <aside class="role-card">
-        <p class="eyebrow">Was ich damit zeigen möchte</p>
-        <div class="role-row"><span>1</span><div><strong>Problem verstanden</strong><small>Ein auffälliger Vorgang muss schnell verständlich werden.</small></div></div>
-        <div class="role-row"><span>2</span><div><strong>Klare Entscheidungshilfe gebaut</strong><small>Das System erklärt Gründe. Ein Mensch entscheidet.</small></div></div>
-        <div class="role-row"><span>3</span><div><strong>Verhalten überprüft</strong><small>Nicht nur ein schöner Demo-Fall: auch Normalfälle und Gegenbeispiele werden getestet.</small></div></div>
+        <p class="eyebrow">Was diese Arbeitsprobe zeigt</p>
+        <div class="role-row"><span>1</span><div><strong>Auffälliges Verhalten verständlich machen</strong><small>Aus einzelnen Zahlungen wird ein klar erklärbarer Vorgang.</small></div></div>
+        <div class="role-row"><span>2</span><div><strong>Menschen bei Entscheidungen unterstützen</strong><small>Das System erklärt Gründe. Die finale Entscheidung bleibt beim Menschen.</small></div></div>
+        <div class="role-row"><span>3</span><div><strong>Verhalten nachweisbar prüfen</strong><small>Normalfälle, Gegenbeispiele und Auditierbarkeit werden automatisiert getestet.</small></div></div>
       </aside>
     </section>
 
@@ -88,12 +89,12 @@
     <section class="explain-section">
       <div>
         <p class="eyebrow">Der Fall in einem Satz</p>
-        <h2>Viele Mini-Zahlungen. Dann plötzlich €499.</h2>
+        <h2>Viele Mini-Zahlungen. Dann plötzlich 499 €.</h2>
         <p class="section-copy">FraudFlow behauptet nicht „Das ist Betrug“. Es erkennt ein ungewöhnliches Muster, erklärt warum und legt den Vorgang einem Menschen zur Prüfung vor.</p>
       </div>
       <div class="question-grid">
         <article><span>01</span><strong>Was sehen wir?</strong><p>Fünf Zahlungen innerhalb von 27 Sekunden.</p></article>
-        <article><span>02</span><strong>Was ist ungewöhnlich?</strong><p>Die ersten Beträge sind winzig. Danach springt der Betrag auf €499.</p></article>
+        <article><span>02</span><strong>Was ist ungewöhnlich?</strong><p>Die ersten Beträge sind winzig. Danach springt der Betrag auf 499 €.</p></article>
         <article><span>03</span><strong>Was macht das System?</strong><p>Es empfiehlt eine Prüfung statt automatisch zu blockieren.</p></article>
         <article><span>04</span><strong>Was bleibt nachvollziehbar?</strong><p>Die Gründe und die menschliche Entscheidung werden dokumentiert.</p></article>
       </div>
@@ -121,9 +122,9 @@
 
     <section class="role-map-section">
       <div class="proof-intro">
-        <p class="eyebrow">Für Hiring Manager & Engineers</p>
-        <h2>Wie passt das zur DKB-Rolle?</h2>
-        <p>Hier wird die Stellenanforderung jeweils mit einem konkreten, anklickbaren Nachweis aus dem Repository verbunden.</p>
+        <p class="eyebrow">Wo diese Arbeit einsetzbar ist</p>
+        <h2>Ein gemeinsamer Kern für Fraud-Teams.</h2>
+        <p>Die Arbeitsprobe ist bewusst nicht auf ein Unternehmen zugeschnitten. Sie zeigt wiederverwendbare Fähigkeiten an der Schnittstelle von Fraud Operations, Daten, Plattformen und Governance.</p>
       </div>
       <div class="role-map" id="roleMap"></div>
     </section>
@@ -135,7 +136,7 @@
       <a href="https://github.com/mikelninh/fraudflow-dkb/tree/main/.ai-build" target="_blank" rel="noreferrer">Build OS im Repo ansehen ↗</a>
     </section>
 
-    <footer><span>FraudFlow · unabhängige Arbeitsprobe</span><span>DKB-inspirierte Farbwelt, keine offizielle DKB-Produktoberfläche.</span></footer>
+    <footer><span>FraudFlow · unabhängige Arbeitsprobe</span><span>Neutrales Fraud-Ops-Design · keine offizielle Produktoberfläche eines Unternehmens.</span></footer>
   </main>
   <script src="./ui/app.js" defer></script>
 </body>
