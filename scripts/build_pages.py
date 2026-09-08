@@ -10,6 +10,7 @@ if str(ROOT) not in sys.path:
 from app.proof import proof_summary
 from app.seed import card_testing_events
 from app.service import FraudService
+from app.signup_flow import signup_demo_scenarios
 
 FRONTEND = ROOT / "frontend"
 DIST = ROOT / "dist"
@@ -45,6 +46,10 @@ def main() -> None:
     scenario = build_scenario()
     (DIST / "demo" / "scenario.json").write_text(
         json.dumps(scenario, indent=2) + "\n", encoding="utf-8"
+    )
+
+    (DIST / "demo" / "signup-flow.json").write_text(
+        json.dumps(signup_demo_scenarios(), indent=2) + "\n", encoding="utf-8"
     )
 
     eval_results = json.loads(EVIDENCE.read_text(encoding="utf-8"))
