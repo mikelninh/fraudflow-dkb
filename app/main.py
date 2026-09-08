@@ -28,6 +28,11 @@ def investigator_cockpit():
     return FileResponse(FRONTEND / "index.html")
 
 
+@app.get("/signup", include_in_schema=False)
+def signup_flow_cockpit():
+    return FileResponse(FRONTEND / "signup.html")
+
+
 @app.get("/health")
 def health() -> dict[str, str]:
     return {"status": "ok", "version": "0.5.0"}
