@@ -39,6 +39,7 @@ def main() -> None:
     (DIST / "demo").mkdir(parents=True)
 
     shutil.copy2(FRONTEND / "index.html", DIST / "index.html")
+    shutil.copy2(FRONTEND / "signup.html", DIST / "signup.html")
     shutil.copy2(FRONTEND / "styles.css", DIST / "ui" / "styles.css")
     shutil.copy2(FRONTEND / "app.js", DIST / "ui" / "app.js")
     (DIST / ".nojekyll").write_text("", encoding="utf-8")
