@@ -9,6 +9,7 @@ from .models import AnalystDecision, FraudCase, TransactionEvent
 from .proof import proof_summary
 from .seed import card_testing_events
 from .service import service
+from .signup_flow import signup_demo_scenarios
 
 ROOT = Path(__file__).resolve().parents[1]
 FRONTEND = ROOT / "frontend"
@@ -16,8 +17,8 @@ EVIDENCE = ROOT / "evidence" / "eval-results.json"
 
 app = FastAPI(
     title="FraudFlow",
-    description="Synthetic fraud data & integration proof-of-work",
-    version="0.4.0",
+    description="Synthetic fraud data, decision systems and signup-flow proof-of-work",
+    version="0.5.0",
 )
 app.mount("/ui", StaticFiles(directory=FRONTEND), name="ui")
 
@@ -27,9 +28,14 @@ def investigator_cockpit():
     return FileResponse(FRONTEND / "index.html")
 
 
+@app.get("/signup", include_in_schema=False)
+def signup_flow_cockpit():
+    return FileResponse(FRONTEND / "signup.html")
+
+
 @app.get("/health")
 def health() -> dict[str, str]:
-    return {"status": "ok", "version": "0.4.0"}
+    return {"status": "ok", "version": "0.5.0"}
 
 
 @app.post("/events/transaction", response_model=FraudCase | None)
@@ -85,3 +91,8 @@ def run_card_testing_demo():
         "source_events": [event.model_dump(mode="json") for event in events],
         "case": created_case.model_dump(mode="json"),
     }
+
+
+@app.get("/demo/signup-flow")
+def run_signup_flow_demo():
+    return signup_demo_scenarios()
