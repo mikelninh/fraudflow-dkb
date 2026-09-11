@@ -5,12 +5,20 @@ let staticAudit = [];
 
 const isGitHubPages = window.location.hostname.endsWith('github.io');
 const money = new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' });
+const number = new Intl.NumberFormat('de-DE');
+const one = new Intl.NumberFormat('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
 const signalCopy = {
   transaction_velocity: 'Viele Zahlungen direkt hintereinander',
   amount_anomaly: 'Der Betrag springt plötzlich stark nach oben',
   new_device: 'Ein bisher unbekanntes Gerät taucht auf',
   impossible_travel: 'Der Standort wechselt ungewöhnlich schnell'
+};
+const dataSignalCopy = {
+  velocity: 'Velocity',
+  amount_jump: 'Amount jump',
+  impossible_travel: 'Impossible travel',
+  new_device_combo: 'New-device combo'
 };
 
 function setStep(step) {
@@ -176,5 +184,29 @@ async function loadProof() {
   }
 }
 
+async function loadDataTech() {
+  const transactions = $('#dtTransactions');
+  if (!transactions) return;
+
+  try {
+    const url = isGitHubPages ? './demo/data-tech-summary.json' : './demo/data-tech-summary.json';
+    const response = await fetch(url);
+    if (!response.ok) throw new Error('Data-tech proof unavailable');
+    const summary = await response.json();
+    $('#dtTransactions').textContent = number.format(summary.transactions);
+    $('#dtQuality').textContent = `${one.format(summary.data_quality_pass_rate)} %`;
+    $('#dtAlertRate').textContent = `${one.format(summary.alert_rate)} %`;
+    $('#dtTopSignal').textContent = dataSignalCopy[summary.top_signal] || summary.top_signal;
+    $('#dtTopSignalSub').textContent = `${number.format(summary.top_signal_count)} Treffer im synthetischen Cohort`;
+  } catch (error) {
+    $('#dtTransactions').textContent = '—';
+    $('#dtQuality').textContent = '—';
+    $('#dtAlertRate').textContent = '—';
+    $('#dtTopSignal').textContent = '—';
+    $('#dtTopSignalSub').textContent = 'Evidence im Repository prüfen';
+  }
+}
+
 $('#startDemo').addEventListener('click', startDemo);
+loadDataTech();
 loadProof();
