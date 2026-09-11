@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>FraudFlow — Fraud Operations & Decision Systems</title>
-  <meta name="description" content="Explainable fraud operations work sample: suspicious payment patterns, human review, auditability and reproducible proof." />
+  <meta name="description" content="Explainable fraud operations work sample: suspicious payment patterns, data quality, human review, auditability and reproducible proof." />
   <link rel="stylesheet" href="./ui/styles.css" />
 </head>
 <body>
@@ -22,20 +22,20 @@
 
     <section class="hero" id="top">
       <div class="hero-copy">
-        <p class="eyebrow">Fraud Operations · verständlich statt Black Box</p>
+        <p class="eyebrow">Fraud Operations · Data & Technology · verständlich statt Black Box</p>
         <h1>Wie aus fünf Zahlungen ein <span>prüfbarer Verdacht</span> wird.</h1>
-        <p class="lede">Eine Arbeitsprobe dafür, wie ich auffälliges Zahlungsverhalten in einen nachvollziehbaren Prozess übersetze: Was ist passiert? Warum lohnt sich eine Prüfung? Was soll ein Mensch als Nächstes tun?</p>
+        <p class="lede">Eine Arbeitsprobe dafür, wie ich auffälliges Zahlungsverhalten in einen nachvollziehbaren Prozess übersetze: Was ist passiert? Warum lohnt sich eine Prüfung? Welche Daten und Schnittstellen tragen die Entscheidung? Was soll ein Mensch als Nächstes tun?</p>
         <div class="hero-actions">
           <button class="primary" id="startDemo">90-Sekunden-Fall starten</button>
-          <a class="secondary" href="#proof">Nachweise ansehen</a>
+          <a class="secondary" href="#data-tech">Data-&-Tech-Layer ansehen</a>
         </div>
-        <div class="hero-note"><strong>Kein Fraud-Vorwissen nötig.</strong> Die Demo zeigt fünf erfundene Zahlungen und erklärt Schritt für Schritt, warum der Vorgang geprüft werden sollte.</div>
+        <div class="hero-note"><strong>Kein Fraud-Vorwissen nötig.</strong> Die Demo zeigt erfundene Zahlungen und erklärt Schritt für Schritt, wie aus Rohdaten ein prüfbarer, menschlich verantworteter Vorgang wird.</div>
       </div>
       <aside class="role-card">
         <p class="eyebrow">Was diese Arbeitsprobe zeigt</p>
-        <div class="role-row"><span>1</span><div><strong>Auffälliges Verhalten verständlich machen</strong><small>Aus einzelnen Zahlungen wird ein klar erklärbarer Vorgang.</small></div></div>
-        <div class="role-row"><span>2</span><div><strong>Menschen bei Entscheidungen unterstützen</strong><small>Das System erklärt Gründe. Die finale Entscheidung bleibt beim Menschen.</small></div></div>
-        <div class="role-row"><span>3</span><div><strong>Verhalten nachweisbar prüfen</strong><small>Normalfälle, Gegenbeispiele und Auditierbarkeit werden automatisiert getestet.</small></div></div>
+        <div class="role-row"><span>1</span><div><strong>Fraud-Prozesse in technische Flows übersetzen</strong><small>Events, Datenqualität, Signale, Case und Audit bilden einen nachvollziehbaren Ablauf.</small></div></div>
+        <div class="role-row"><span>2</span><div><strong>Daten in Entscheidungen übersetzen</strong><small>Regeln und Auffälligkeiten bleiben erklärbar; die finale Entscheidung bleibt beim Menschen.</small></div></div>
+        <div class="role-row"><span>3</span><div><strong>Verhalten nachweisbar prüfen</strong><small>Normalfälle, Gegenbeispiele, Datenqualität und Auditierbarkeit werden automatisiert getestet.</small></div></div>
       </aside>
     </section>
 
@@ -97,6 +97,29 @@
         <article><span>02</span><strong>Was ist ungewöhnlich?</strong><p>Die ersten Beträge sind winzig. Danach springt der Betrag auf 499 €.</p></article>
         <article><span>03</span><strong>Was macht das System?</strong><p>Es empfiehlt eine Prüfung statt automatisch zu blockieren.</p></article>
         <article><span>04</span><strong>Was bleibt nachvollziehbar?</strong><p>Die Gründe und die menschliche Entscheidung werden dokumentiert.</p></article>
+      </div>
+    </section>
+
+    <section class="data-tech-section" id="data-tech">
+      <div class="proof-intro">
+        <p class="eyebrow">Data & Technology layer</p>
+        <h2>Vom Event bis zum Monitoring.</h2>
+        <p>Der Einzelfall oben zeigt die Entscheidung. Dieser Layer zeigt die technische Übersetzung dahinter: synthetische Events werden validiert, strukturiert, per SQL/Python ausgewertet und als überprüfbare Fraud-KPIs sichtbar gemacht.</p>
+      </div>
+      <div class="data-flow" aria-label="Datenfluss">
+        <span>Source events</span><i>→</i><span>Data quality gate</span><i>→</i><span>Typed model</span><i>→</i><span>Fraud signals</span><i>→</i><span>Human review</span><i>→</i><span>KPI monitoring</span>
+      </div>
+      <div class="data-tech-grid">
+        <article><small>Synthetischer Cohort</small><strong id="dtTransactions">—</strong><p>reproduzierbare Transaktionen aus festem Seed</p></article>
+        <article><small>Data-quality pass</small><strong id="dtQuality">—</strong><p>Pflichtfelder vollständig im Demo-Cohort</p></article>
+        <article><small>Alert rate</small><strong id="dtAlertRate">—</strong><p>regelbasierte Auffälligkeiten, nicht ML-Accuracy</p></article>
+        <article><small>Top signal</small><strong id="dtTopSignal">—</strong><p id="dtTopSignalSub">häufigstes synthetisches Signal</p></article>
+      </div>
+      <div class="data-tech-note"><strong>Truth boundary:</strong> Diese Kennzahlen stammen ausschließlich aus deterministisch erzeugten Demo-Daten. Sie sind keine DKB-, Kunden- oder Produktionsmetriken und behaupten keine Modellgüte.</div>
+      <div class="proof-links compact-links">
+        <a href="https://github.com/mikelninh/fraudflow-dkb/blob/main/analysis/data_tech_lab.py" target="_blank" rel="noreferrer"><strong>Python Analysis</strong><small>Cohort + Quality + KPI logic ↗</small></a>
+        <a href="https://github.com/mikelninh/fraudflow-dkb/blob/main/analysis/fraud_metrics.sql" target="_blank" rel="noreferrer"><strong>SQL Metrics</strong><small>Quality, alerts, outcomes, segments ↗</small></a>
+        <a href="https://github.com/mikelninh/fraudflow-dkb/blob/main/tests/test_data_tech_analysis.py" target="_blank" rel="noreferrer"><strong>Data Tests</strong><small>Determinism + bounded checks ↗</small></a>
       </div>
     </section>
 
