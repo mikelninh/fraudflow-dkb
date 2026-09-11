@@ -7,6 +7,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from analysis.data_tech_lab import compute_summary
 from app.proof import proof_summary
 from app.seed import card_testing_events
 from app.service import FraudService
@@ -50,6 +51,10 @@ def main() -> None:
     eval_results = json.loads(EVIDENCE.read_text(encoding="utf-8"))
     (DIST / "demo" / "proof.json").write_text(
         json.dumps(proof_summary(eval_results), indent=2) + "\n", encoding="utf-8"
+    )
+
+    (DIST / "demo" / "data-tech-summary.json").write_text(
+        json.dumps(compute_summary(), indent=2) + "\n", encoding="utf-8"
     )
 
     print("GitHub Pages artifact built: dist/")
